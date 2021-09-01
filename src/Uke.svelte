@@ -1,48 +1,37 @@
 <script>
+    import { createStrings, createFrets, createNut, createMarks } from "./uke";
+    export let width = 1850;
     export let height = 250;
-    export let width = 1500;
-    // TODO: fret count
+    export let fretCount = 18;
 
     // Uke strings
-    let stringos = {
-        color: "black",
-        size: 3,
-        len: 0.87 * width,
-        x1: 0.1 * width,
-        y: [
-            { y: 0.1 * height },
-            { y: 0.366 * height },
-            { y: 0.633 * height },
-            { y: 0.9 * height },
-        ],
-    };
+    let strings = createStrings(width, height);
 
     // Frets
-    let frets = {
-        color: "grey",
-        size: 2,
-        len: 1.13 * (stringos.y.slice(-1)[0].y - stringos.y[0].y),
-        y1: 0.5 * stringos.y[0].y,
-        x: [
-            { x: stringos.x1 },
-            { x: stringos.x1 + (1 / 16) * stringos.len },
-            { x: stringos.x1 + (2 / 16) * stringos.len },
-            { x: stringos.x1 + (3 / 16) * stringos.len },
-            { x: stringos.x1 + (4 / 16) * stringos.len },
-            { x: stringos.x1 + (5 / 16) * stringos.len },
-            { x: stringos.x1 + (6 / 16) * stringos.len },
-            { x: stringos.x1 + (7 / 16) * stringos.len },
-            { x: stringos.x1 + (8 / 16) * stringos.len },
-            { x: stringos.x1 + (9 / 16) * stringos.len },
-            { x: stringos.x1 + (10 / 16) * stringos.len },
-            { x: stringos.x1 + (11 / 16) * stringos.len },
-            { x: stringos.x1 + (12 / 16) * stringos.len },
-            { x: stringos.x1 + (13 / 16) * stringos.len },
-            { x: stringos.x1 + (14 / 16) * stringos.len },
-            { x: stringos.x1 + (15 / 16) * stringos.len },
-            { x: stringos.x1 + (16 / 16) * stringos.len },
-        ],
-    };
+    let frets = createFrets(
+        strings.x1,
+        strings.y[0].y,
+        strings.y.slice(-1)[0].y,
+        strings.len,
+        fretCount
+    );
+
+    // Nut
+    let nut = createNut(
+        strings.x1,
+        strings.y[0].y,
+        strings.y.slice(-1)[0].y,
+        4 * frets.size
+    );
+
+    // Marks
+    let marks = createMarks(
+        nut.x,
+        frets.x.slice(-1)[0].x,
+        height / 2,
+        fretCount,
+        10
+    );
 </script>
 
 <div>
@@ -53,28 +42,35 @@
                 x1={x}
                 y1={frets.y1}
                 x2={x}
-                y2={frets.y1 + frets.len}
+                y2={frets.y2}
                 style="stroke:{frets.color};stroke-width:{frets.size}"
             />
         {/each}
 
+        <!-- Nut -->
+        <line
+            x1={nut.x}
+            y1={nut.y1}
+            x2={nut.x}
+            y2={nut.y2}
+            style="stroke:{nut.color};stroke-width:{nut.size}"
+        />
+
         <!-- 4 Uke Strings -->
-        {#each stringos.y as { y }}
+        {#each strings.y as { y }}
             <line
-                x1={stringos.x1}
+                x1={strings.x1}
                 y1={y}
-                x2={stringos.x1 + stringos.len}
+                x2={strings.x1 + strings.len}
                 y2={y}
-                style="stroke:{stringos.color};stroke-width:{stringos.size}"
+                style="stroke:{strings.color};stroke-width:{strings.size}"
             />
         {/each}
 
         <!-- Fret marker -->
-        <!-- <svg height={diameter} width={diameter}>
-            <circle cx={radius} cy={radius} r={radius} fill="lightgrey" />
-            <text x={radius} y={radius} text-anchor="middle" fill="white">{number}</text
-            >
-        </svg> -->
+        {#each marks as { x, y, r }}
+            <circle cx={x} cy={y} {r} fill="lightgrey" />
+        {/each}
 
         <!-- Note -->
         <!-- <svg height={diameter} width={diameter}>
