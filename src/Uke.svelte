@@ -1,8 +1,19 @@
 <script>
-    import { createStrings, createFrets, createNut, createMarks } from "./uke";
-    export let width = 1850;
+    import {
+        createStrings,
+        createFrets,
+        createNut,
+        createMarks,
+        createNote,
+    } from "./uke";
+    export let width = 1500;
     export let height = 250;
-    export let fretCount = 18;
+    export let fretCount = 17;
+    export let chords = [
+        [2, 1, 2, 4],
+        [5, 5, 6, 6],
+        [8, 8, 8, 10],
+    ];
 
     // Uke strings
     let strings = createStrings(width, height);
@@ -28,9 +39,20 @@
     let marks = createMarks(
         nut.x,
         frets.x.slice(-1)[0].x,
-        height / 2,
         fretCount,
+        height / 2,
         10
+    );
+
+    let exampleNote = createNote(
+        8,
+        3,
+        20,
+        strings.y[0].y,
+        strings.y.slice(-1)[0].y,
+        nut.x,
+        frets.x.slice(-1)[0].x,
+        fretCount
     );
 </script>
 
@@ -73,19 +95,18 @@
         {/each}
 
         <!-- Note -->
-        <!-- <svg height={diameter} width={diameter}>
-            <circle cx={radius} cy={radius} r={radius} fill={color} />
-            <text x={radius} y={radius} text-anchor="middle" fill="white"
-                >{number}</text
-            >
-        </svg> -->
+        <circle
+            cx={exampleNote.fret}
+            cy={exampleNote.stringo}
+            r={exampleNote.r}
+            fill="blue"
+        />
     </svg>
 </div>
 
 <style>
     /* div for debugging */
     div {
-        background-color: wheat;
         width: max-content;
         height: max-content;
         border: 1px solid black;

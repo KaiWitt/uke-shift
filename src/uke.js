@@ -1,13 +1,12 @@
-import { null_to_empty } from "svelte/internal";
 
-export { createStrings, createFrets, createNut, createMarks }
+export { createStrings, createFrets, createNut, createMarks, createNote }
 
 function createStrings(width, height) {
     let strings = {
         color: 'black',
         size: 3,
-        len: 0.925 * width,
-        x1: 0.05 * width,
+        len: 0.98 * width,
+        x1: 0.01 * width,
         y: [
             { y: 0.1 * height },
             { y: (0.1 + 8 / 30) * height },
@@ -20,30 +19,30 @@ function createStrings(width, height) {
     return strings;
 }
 
-function createFrets(firstX, stringY1, stringY2, stringLen, count) {
+function createFrets(firstFretX, firstStringY, lastStringY, stringLen, fretCount) {
     let posX = [];
-    for (let i = 0; i <= count; i++) {
-        let x = { x: firstX + (i / count) * stringLen };
+    for (let i = 0; i <= fretCount; i++) {
+        let x = { x: firstFretX + (i / fretCount) * stringLen };
         posX.push(x);
     }
     let frets = {
         color: "grey",
         size: 2,
         x: posX,
-        y1: stringY1,
-        y2: stringY2,
+        y1: firstStringY,
+        y2: lastStringY,
     };
     console.log('Frets: ', frets);
 
     return frets;
 }
 
-function createNut(x, y1, y2, size) {
+function createNut(x, firstStringY, lastStringY, size) {
     let nut = {
         color: "black",
         size: size,
-        y1: y1,
-        y2: y2,
+        y1: firstStringY,
+        y2: lastStringY,
         x: x
     };
     console.log('Nut: ', nut);
@@ -51,17 +50,32 @@ function createNut(x, y1, y2, size) {
     return nut;
 }
 
-function createMarks(x1, x2, y, fretCount, r) {
+function createMarks(nutX, lastFretX, fretCount, y, r) {
     let marks = [];
-    let step = (x2 - x1) / fretCount;
+    let step = (lastFretX - nutX) / fretCount;
     for (let i = 0; i <= fretCount; i++) {
         if ([3, 5, 7, 10, 12, 15].includes(i)) {
-            let x = { x: x1 + (i - 0.5) * step, y: y, r: r };
+            let x = { x: nutX + (i - 0.5) * step, y: y, r: r };
             marks.push(x);
         }
     }
     console.log('Marks: ', marks);
-    console.log('Step: ', step);
 
     return marks;
+}
+
+function createNote(fret, stringo, r, firstStringY, lastStringY, nutX, lastFretX, fretCount) {
+    let fretStep = (lastFretX - nutX) / fretCount;
+
+    // 4 Strings make 3 sections
+    let stringStep = (lastStringY - firstStringY) / 3;
+
+    let note = {
+        fret: (fret - 0.5) * fretStep + nutX,
+        stringo: stringo * stringStep + firstStringY,
+        r: r,
+    }
+    console.log('Note: ', note);
+
+    return note;
 }
