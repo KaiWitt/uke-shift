@@ -16,57 +16,23 @@
     let strings = createStrings(width, height);
 
     // Frets
-    let frets = createFrets(
-        strings.x1,
-        strings.y[0].y,
-        strings.y.slice(-1)[0].y,
-        strings.len,
-        fretCount
-    );
+    let frets = createFrets(strings, fretCount);
 
     // Nut
-    let nut = createNut(
-        strings.x1,
-        strings.y[0].y,
-        strings.y.slice(-1)[0].y,
-        4 * frets.size
-    );
+    let nut = createNut(frets);
 
     // Marks
-    let marks = createMarks(
-        nut.x,
-        frets.x.slice(-1)[0].x,
-        fretCount,
-        height / 2,
-        10
-    );
+    let marks = createMarks(frets, 10);
 
-    let exampleNote = createNote(
-        15,
-        1,
-        20,
-        strings.y[0].y,
-        strings.y.slice(-1)[0].y,
-        nut.x,
-        frets.x.slice(-1)[0].x,
-        fretCount
-    );
+    let exampleNote = createNote(strings, frets, 15, 1, 20);
 
-    let exampleChord = createChord(
-        [2, 3, 2, 4],
-        20,
-        strings.y[0].y,
-        strings.y.slice(-1)[0].y,
-        nut.x,
-        frets.x.slice(-1)[0].x,
-        fretCount
-    );
+    let exampleChord = createChord(strings, frets, [2, 3, 2, 4], 20);
 </script>
 
 <div>
     <svg {height} {width}>
         <!-- Frets -->
-        {#each frets.x as { x }}
+        {#each frets.x as x}
             <line
                 x1={x}
                 y1={frets.y1}
@@ -86,7 +52,7 @@
         />
 
         <!-- 4 Uke Strings -->
-        {#each strings.y as { y }}
+        {#each strings.y as y}
             <line
                 x1={strings.x1}
                 y1={y}
