@@ -1,19 +1,16 @@
-<script>
+<script lang="ts">
     import {
         createStrings,
         createFrets,
         createNut,
         createMarks,
         createNote,
+        createChord,
     } from "./uke";
+
     export let width = 1500;
     export let height = 250;
     export let fretCount = 17;
-    export let chords = [
-        [2, 1, 2, 4],
-        [5, 5, 6, 6],
-        [8, 8, 8, 10],
-    ];
 
     // Uke strings
     let strings = createStrings(width, height);
@@ -45,8 +42,18 @@
     );
 
     let exampleNote = createNote(
-        8,
-        3,
+        15,
+        1,
+        20,
+        strings.y[0].y,
+        strings.y.slice(-1)[0].y,
+        nut.x,
+        frets.x.slice(-1)[0].x,
+        fretCount
+    );
+
+    let exampleChord = createChord(
+        [2, 3, 2, 4],
         20,
         strings.y[0].y,
         strings.y.slice(-1)[0].y,
@@ -99,7 +106,7 @@
             cx={exampleNote.fret}
             cy={exampleNote.stringo}
             r={exampleNote.r}
-            fill="blue"
+            fill={exampleNote.color}
         />
     </svg>
 </div>
@@ -109,6 +116,6 @@
     div {
         width: max-content;
         height: max-content;
-        border: 1px solid black;
+        /* border: 1px solid black; */
     }
 </style>
