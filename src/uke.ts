@@ -10,7 +10,7 @@ interface UkeStrings {
 }
 
 function createStrings(width: number, height: number): UkeStrings {
-    const strings = {
+    const strings: UkeStrings = {
         color: 'black',
         size: 3,
         len: 0.948 * width,
@@ -41,7 +41,7 @@ function createFrets(ukeStrings: UkeStrings, fretCount: number): Frets {
     for (var i = 0; i <= fretCount; i++) {
         posX.push(ukeStrings.x1 + (i / fretCount) * ukeStrings.len);
     }
-    const frets = {
+    const frets: Frets = {
         color: "grey",
         size: 2,
         x: posX,
@@ -62,7 +62,7 @@ interface Nut {
 }
 
 function createNut(frets: Frets): Nut {
-    const nut = {
+    const nut: Nut = {
         color: "black",
         size: 4 * frets.size,
         x: frets.x[0],
@@ -82,7 +82,7 @@ interface Mark {
 
 function createMarks(frets: Frets, r: number): Mark[] {
     const step = (frets.x.slice(-1)[0] - frets.x[0]) / frets.x.length;
-    var marks = [];
+    var marks: Mark[] = [];
     for (var i = 0; i <= frets.x.length; i++) {
         if ([3, 5, 7, 10, 12, 15].includes(i)) {
             const height = (frets.y2 + frets.y1) / 2 + frets.y1;
@@ -107,7 +107,7 @@ function createNote(ukeStrings: UkeStrings, frets: Frets, fret: number, stringo:
     const stringStep = (ukeStrings.y.slice(-1)[0] - ukeStrings.y[0]) / (ukeStrings.y.length - 1);
     const fretStep = (frets.x.slice(-1)[0] - frets.x[0]) / frets.x.length;
 
-    const note = {
+    const note: Note = {
         color: "lightgreen",
         fret: (fret - 0.5) * fretStep + frets.x[0],
         stringo: stringo * stringStep + ukeStrings.y[0],
@@ -123,10 +123,10 @@ function createChord(ukeStrings: UkeStrings, frets: Frets, chord: number[], r: n
     const stringStep = (ukeStrings.y.slice(-1)[0] - ukeStrings.y[0]) / (ukeStrings.y.length - 1);
     const fretStep = (frets.x.slice(-1)[0] - frets.x[0]) / frets.x.length;
 
-    var notes = [];
+    var notes: Note[] = [];
     for (var i = 0; i < chord.length; i++) {
         const note = {
-            colors: "lightgreen",
+            color: "lightgreen",
             fret: (chord[i] - 0.5) * fretStep + frets.x[0],
             stringo: i * stringStep + ukeStrings.y[0],
             r: r,
