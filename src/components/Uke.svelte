@@ -16,12 +16,14 @@
         [10, 11, 12, 13],
     ];
 
-    const fretCount = 17;
+    const fretCount = 16;
+    const markRadius = 10;
+    const noteRadius = 25;
     let strings = createStrings(width, height);
     let frets = createFrets(strings, fretCount);
     let nut = createNut(frets);
-    let marks = createMarks(frets, 10);
-    let notes = createChords(strings, frets, chords, 25);
+    let marks = createMarks(frets, markRadius);
+    let notes = createChords(strings, frets, chords, noteRadius);
 </script>
 
 <div>
@@ -73,12 +75,3 @@
         {/each}
     </svg>
 </div>
-
-<style>
-    /* div for debugging */
-    div {
-        width: max-content;
-        height: max-content;
-        border: 1px solid black;
-    }
-</style>

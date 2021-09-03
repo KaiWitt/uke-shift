@@ -1,26 +1,20 @@
 <script lang="ts">
-	import Uke from "./Uke.svelte";
-	export let name: string;
+	import Uke from "./components/Uke.svelte";
+	import ChordPicker from "./components/ChordPicker.svelte";
+	import Logo from "./components/Logo.svelte";
+	import Footer from "./components/Footer.svelte";
 </script>
 
 <main>
-	<h1>Hello {name}, welcome to UkeShift!</h1>
+	<Logo />
+	<ChordPicker />
 	<Uke />
-	<p>Made with Svelte and WebAssembly</p>
+	<Footer />
 </main>
 
 <style>
 	main {
 		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		font-size: 4em;
-		font-weight: 100;
 	}
 
 	@media (min-width: 640px) {

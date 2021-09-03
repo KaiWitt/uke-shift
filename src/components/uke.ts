@@ -23,7 +23,7 @@ function createStrings(width: number, height: number): UkeStrings {
             0.9 * height,
         ],
     };
-    console.log('Strings: ', strings);
+
 
     return strings;
 }
@@ -49,7 +49,7 @@ function createFrets(ukeStrings: UkeStrings, fretCount: number): Frets {
         y1: ukeStrings.y[0],
         y2: ukeStrings.y.slice(-1)[0],
     };
-    console.log('Frets: ', frets);
+
 
     return frets;
 }
@@ -70,7 +70,7 @@ function createNut(frets: Frets): Nut {
         y1: frets.y1,
         y2: frets.y2,
     };
-    console.log('Nut: ', nut);
+
 
     return nut;
 }
@@ -91,7 +91,7 @@ function createMarks(frets: Frets, r: number): Mark[] {
             marks.push(x);
         }
     }
-    console.log('Marks: ', marks);
+
 
     return marks;
 }
@@ -129,7 +129,7 @@ function createChord(ukeStrings: UkeStrings, frets: Frets, chord: number[], r: n
         }
         notes.push(note);
     }
-    console.log('Chord: ', notes);
+
 
     return notes;
 }
