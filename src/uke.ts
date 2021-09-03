@@ -1,5 +1,6 @@
 
-export { createStrings, createFrets, createNut, createMarks, createNote, createChord }
+export { createStrings, createFrets, createNut, createMarks, createChords };
+export type { Note };
 
 interface UkeStrings {
     color: string;
@@ -81,12 +82,12 @@ interface Mark {
 }
 
 function createMarks(frets: Frets, r: number): Mark[] {
-    const step = (frets.x.slice(-1)[0] - frets.x[0]) / frets.x.length;
+    const fretStep = (frets.x.slice(-1)[0] - frets.x[0]) / (frets.x.length - 1);
     var marks: Mark[] = [];
     for (var i = 0; i <= frets.x.length; i++) {
         if ([3, 5, 7, 10, 12, 15].includes(i)) {
-            const height = (frets.y2 + frets.y1) / 2 + frets.y1;
-            const x = { x: frets.x[0] + (i - 0.5) * step, y: height, r: r };
+            const height = (frets.y2 + frets.y1) / 2;
+            const x = { x: frets.x[0] + (i - 0.5) * fretStep, y: height, r: r };
             marks.push(x);
         }
     }
@@ -95,40 +96,35 @@ function createMarks(frets: Frets, r: number): Mark[] {
     return marks;
 }
 
-
 interface Note {
     color: string;
     fret: number;
     stringo: number;
     r: number;
 }
-function createNote(ukeStrings: UkeStrings, frets: Frets, fret: number, stringo: number, r: number): Note {
-    // 4 Strings make 3 sections
-    const stringStep = (ukeStrings.y.slice(-1)[0] - ukeStrings.y[0]) / (ukeStrings.y.length - 1);
-    const fretStep = (frets.x.slice(-1)[0] - frets.x[0]) / frets.x.length;
 
-    const note: Note = {
-        color: "lightgreen",
-        fret: (fret - 0.5) * fretStep + frets.x[0],
-        stringo: stringo * stringStep + ukeStrings.y[0],
-        r: r,
+function createChords(ukeStrings: UkeStrings, frets: Frets, chords: number[][], r: number): Note[] {
+    let colors = ["lightgreen", "lightblue", "lightred", "wheat"];
+    var notes: Note[][] = [];
+
+    for (var i = 0; i < chords.length; i++) {
+        notes.push(createChord(ukeStrings, frets, chords[i], 20, colors[i]));
     }
-    console.log('Note: ', note);
 
-    return note;
+    return notes.flat()
 }
 
-function createChord(ukeStrings: UkeStrings, frets: Frets, chord: number[], r: number): Note[] {
+function createChord(ukeStrings: UkeStrings, frets: Frets, chord: number[], r: number, color: string): Note[] {
     // 4 Strings make 3 sections
     const stringStep = (ukeStrings.y.slice(-1)[0] - ukeStrings.y[0]) / (ukeStrings.y.length - 1);
-    const fretStep = (frets.x.slice(-1)[0] - frets.x[0]) / frets.x.length;
+    const fretStep = (frets.x.slice(-1)[0] - frets.x[0]) / (frets.x.length - 1);
 
     var notes: Note[] = [];
     for (var i = 0; i < chord.length; i++) {
         const note = {
-            color: "lightgreen",
+            color: color,
             fret: (chord[i] - 0.5) * fretStep + frets.x[0],
-            stringo: i * stringStep + ukeStrings.y[0],
+            stringo: (chord.length - 1 - i) * stringStep + ukeStrings.y[0],
             r: r,
         }
         notes.push(note);
@@ -137,3 +133,5 @@ function createChord(ukeStrings: UkeStrings, frets: Frets, chord: number[], r: n
 
     return notes;
 }
+
+

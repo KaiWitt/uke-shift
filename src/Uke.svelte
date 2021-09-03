@@ -4,29 +4,24 @@
         createFrets,
         createNut,
         createMarks,
-        createNote,
-        createChord,
+        createChords,
     } from "./uke";
 
     export let width = 1500;
     export let height = 250;
-    export let fretCount = 17;
+    export let chords = [
+        [0, 1, 2, 3],
+        [1, 2, 3, 4],
+        [9, 8, 7, 6],
+        [10, 11, 12, 13],
+    ];
 
-    // Uke strings
+    const fretCount = 17;
     let strings = createStrings(width, height);
-
-    // Frets
     let frets = createFrets(strings, fretCount);
-
-    // Nut
     let nut = createNut(frets);
-
-    // Marks
     let marks = createMarks(frets, 10);
-
-    let exampleNote = createNote(strings, frets, 15, 1, 20);
-
-    let exampleChord = createChord(strings, frets, [2, 3, 2, 4], 20);
+    let notes = createChords(strings, frets, chords, 25);
 </script>
 
 <div>
@@ -67,13 +62,15 @@
             <circle cx={x} cy={y} {r} fill="lightgrey" />
         {/each}
 
-        <!-- Note -->
-        <circle
-            cx={exampleNote.fret}
-            cy={exampleNote.stringo}
-            r={exampleNote.r}
-            fill={exampleNote.color}
-        />
+        <!-- Chords -->
+        {#each notes as note}
+            <circle
+                cx={note.fret}
+                cy={note.stringo}
+                r={note.r}
+                fill={note.color}
+            />
+        {/each}
     </svg>
 </div>
 
