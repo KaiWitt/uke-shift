@@ -31,8 +31,8 @@
         "9",
     ].sort();
 
-    let selectedChord: string = "";
-    let selectedFlavour: string = "";
+    export let selectedChord: string = "";
+    export let selectedFlavour: string = "";
 
     function setChord(chord: string) {
         if (selectedChord === chord) {

@@ -3,13 +3,23 @@
 	import ChordPicker from "./components/ChordPicker.svelte";
 	import Logo from "./components/Logo.svelte";
 	import Footer from "./components/Footer.svelte";
+
+	export let name: string;
+	export let website: string;
+	export let github: string;
+
+	let chord: string = "C";
+	let flavour: string = "6";
+
+	// $: chordPositions = getChords(chord, flavour); with WASM
+	let chordPositions: number[][] = [];
 </script>
 
 <main>
 	<Logo />
-	<ChordPicker />
-	<Uke />
-	<Footer />
+	<ChordPicker bind:selectedChord={chord} bind:selectedFlavour={flavour} />
+	<Uke chords={chordPositions} />
+	<Footer {name} {website} {github} />
 </main>
 
 <style>
