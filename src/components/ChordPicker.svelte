@@ -1,170 +1,110 @@
 <script lang="ts">
-    const a = [
-        "A",
-        "A7",
-        "Am",
-        "Am7",
-        "Adim",
-        "Aaug",
-        "A6",
-        "Amaj7",
-        "A9",
-        "Ab",
-        "Ab7",
-        "Abm",
-        "Abm7",
-        "Abdim",
-        "Abaug",
-        "Ab6",
-        "Abmaj7",
-        "Ab9",
+    const chords: string[] = ["A", "B", "C", "D", "E", "F", "G"];
+    const flavours: string[] = [
+        "6",
+        "7",
+        "9",
+        "aug",
+        "b",
+        "b6",
+        "b7",
+        "b9",
+        "baug",
+        "bdim",
+        "bm",
+        "bm7",
+        "bmaj7",
+        "dim",
+        "m",
+        "m7",
+        "maj7",
+    ].sort();
+    const restrictedChords: string[] = ["C", "F"];
+    const restrictedFlavours: string[] = [
+        "7",
+        "m",
+        "m7",
+        "dim",
+        "aug",
+        "6",
+        "maj7",
+        "9",
     ].sort();
 
-    const b = [
-        "Bb",
-        "Bb7",
-        "Bbm",
-        "Bbm7",
-        "Bbdim",
-        "Bbaug",
-        "Bb6",
-        "Bbmaj7",
-        "Bb9",
-        "B",
-        "B7",
-        "Bm",
-        "Bm7",
-        "Bdim",
-        "Baug",
-        "B6",
-        "Bmaj7",
-        "B9",
-    ].sort();
+    let selectedChord: string = "";
+    let selectedFlavour: string = "";
 
-    const c = [
-        "C",
-        "C7",
-        "Cm",
-        "Cm7",
-        "Cdim",
-        "Caug",
-        "C6",
-        "Cmaj7",
-        "C9",
-    ].sort();
-
-    const d = [
-        "D",
-        "D7",
-        "Dm",
-        "Dm7",
-        "Ddim",
-        "Daug",
-        "D6",
-        "Dmaj7",
-        "D9",
-        "Db",
-        "Db7",
-        "Dbm",
-        "Dbm7",
-        "Dbdim",
-        "Dbaug",
-        "Db6",
-        "Dbmaj7",
-        "Db9",
-    ].sort();
-
-    const e = [
-        "E",
-        "E7",
-        "Em",
-        "Em7",
-        "Edim",
-        "Eaug",
-        "E6",
-        "Emaj7",
-        "E9",
-        "Eb",
-        "Eb7",
-        "Ebm",
-        "Ebm7",
-        "Ebdim",
-        "Ebaug",
-        "Eb6",
-        "Ebmaj7",
-        "Eb9",
-    ].sort();
-
-    const f = [
-        "F",
-        "F7",
-        "Fm",
-        "Fm7",
-        "Fdim",
-        "Faug",
-        "F6",
-        "Fmaj7",
-        "F9",
-    ].sort();
-
-    const g = [
-        "G",
-        "G7",
-        "Gm",
-        "Gm7",
-        "Gdim",
-        "Gaug",
-        "G6",
-        "Gmaj7",
-        "G9",
-        "Gb",
-        "Gb7",
-        "Gbm",
-        "Gbm7",
-        "Gbdim",
-        "Gbaug",
-        "Gb6",
-        "Gbmaj7",
-        "Gb9",
-    ].sort();
-
-    const allChords = [a, b, c, d, e, f, g];
-
-    let selected = "";
-
-    function set(name: string) {
-        if (selected === name) {
-            selected = "";
+    function setChord(chord: string) {
+        if (selectedChord === chord) {
+            selectedChord = "";
+            selectedFlavour = "";
         } else {
-            selected = name;
+            selectedChord = chord;
+        }
+
+        // Reset selected flavour if it doesnt fit with chord
+        if (
+            restrictedChords.includes(selectedChord) &&
+            !restrictedFlavours.includes(selectedFlavour)
+        ) {
+            selectedFlavour = "";
+        }
+    }
+
+    function setFlavour(flavour: string) {
+        if (selectedChord === "") {
+            return;
+        }
+        if (selectedFlavour === flavour) {
+            selectedFlavour = "";
+        } else {
+            selectedFlavour = flavour;
         }
     }
 </script>
 
 <div class="outer">
-    <!-- Buttons -->
-    {#each allChords as chord}
-        <div class="inner">
-            {#each chord as chordName}
+    <!-- Chords -->
+    <div class="flavours">
+        {#each chords as chord}
+            <button
+                class:active={selectedChord === chord}
+                on:click={() => setChord(chord)}>{chord}</button
+            >
+        {/each}
+    </div>
+
+    <!-- Flavours -->
+    <div class="flavours">
+        {#if restrictedChords.includes(selectedChord)}
+            {#each restrictedFlavours as flavour}
                 <button
-                    class:active={selected === chordName}
-                    on:click={() => set(chordName)}>{chordName}</button
+                    class:active={selectedFlavour === flavour}
+                    on:click={() => setFlavour(flavour)}>{flavour}</button
                 >
             {/each}
-        </div>
-    {/each}
+        {:else}
+            {#each flavours as flavour}
+                <button
+                    class:active={selectedFlavour === flavour}
+                    on:click={() => setFlavour(flavour)}>{flavour}</button
+                >
+            {/each}
+        {/if}
+    </div>
 </div>
 
 <style>
     .outer {
+        width: 100%;
+    }
+    .flavours {
         display: flex;
+        justify-content: center;
     }
-    .inner {
-        border: 1px solid black;
-        margin: 1px 1px;
-    }
+
     button {
-        align-items: center;
+        margin: 1px 2px;
     }
 
     .active {
