@@ -13,7 +13,7 @@
     export let radius: number = 0;
 
     const fretCount = 17;
-    $: markRadius = 0.4 * radius;
+    $: markRadius = 0.5 * radius;
     $: strings = createStrings(width, height);
     $: frets = createFrets(strings, fretCount);
     $: nut = createNut(frets);

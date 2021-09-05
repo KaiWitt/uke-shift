@@ -1,5 +1,4 @@
 /node_modules/
-/public/build/
 /rust/uke-shift/target
 
 .DS_Store

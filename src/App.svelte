@@ -33,7 +33,7 @@
 			bind:selectedFlavour={flavour}
 		/>
 		<Uke
-			width={0.9 * width}
+			width={0.95 * width}
 			height={(1 / 6) * 0.95 * width}
 			radius={0.013 * 0.95 * width}
 			{chords}
