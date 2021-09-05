@@ -3,6 +3,9 @@
 Visualizer for different Ukulele chord positions.
 
 
+<img src="screenshot.PNG" alt="UkeShift screenshot" width="800"/>
+
+
 ## Get started
 
 Install the dependencies...
