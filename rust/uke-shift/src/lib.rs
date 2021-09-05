@@ -108,4 +108,15 @@ mod tests {
         assert_eq!(result[0..4], [2u8, 2, 2, 3]);
         assert_eq!(result.len(), 5 * 4);
     }
+
+    #[test]
+    fn get_bb_chord() {
+        let chord = "Bb";
+        let flavour = "";
+
+        let result = chord_positions(chord, flavour);
+
+        assert_eq!(result[0..4], [3u8, 2, 1, 1]);
+        assert_eq!(result.len(), 4 * 4);
+    }
 }
