@@ -1,5 +1,5 @@
 
-export { createStrings, createFrets, createNut, createMarks, createChords };
+export { createStrings, createFrets, createNut, createMarks, createChords, arrayToChords };
 export type { Note };
 
 interface UkeStrings {
@@ -134,4 +134,16 @@ function createChord(ukeStrings: UkeStrings, frets: Frets, chord: number[], r: n
     return notes;
 }
 
+function arrayToChords(array: Uint8Array): number[][] {
+    var chords: number[][] = [];
+    var chord: number[] = [];
+    for (var i = 0; i < array.length; i++) {
+        chord.push(array[i]);
+        if (i > 0 && i % 4 === 0) {
+            chords.push(chord);
+            chord = [];
+        }
+    }
 
+    return chords;
+}

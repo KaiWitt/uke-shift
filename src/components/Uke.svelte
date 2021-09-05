@@ -5,7 +5,7 @@
         createNut,
         createMarks,
         createChords,
-    } from "./uke";
+    } from "../uke";
 
     export let width = 1500;
     export let height = 250;

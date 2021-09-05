@@ -8,11 +8,10 @@
 	export let website: string;
 	export let github: string;
 
-	let chord: string = "C";
-	let flavour: string = "6";
-
-	// $: chordPositions = getChords(chord, flavour); with WASM
+	let chord: string = "";
+	let flavour: string = "";
 	let chordPositions: number[][] = [];
+	console.log(chordPositions);
 </script>
 
 <main>
