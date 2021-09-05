@@ -9,34 +9,41 @@
 	export let name: string;
 	export let website: string;
 	export let github: string;
+	export let logo: string;
+
+	let width: number;
 
 	let chord: string = "";
 	let flavour: string = "";
-	let chordPositions: number[][] = [];
+	let chords: number[][] = [];
 
 	async function run(c: string, f: string) {
 		init();
-		chordPositions = arrayToChords(chord_positions(c, f));
+		chords = arrayToChords(chord_positions(c, f));
 	}
 
 	$: run(chord, flavour);
 </script>
 
 <main>
-	<Logo />
-	<ChordPicker bind:selectedChord={chord} bind:selectedFlavour={flavour} />
-	<Uke chords={chordPositions} />
-	<Footer {name} {website} {github} />
+	<div bind:clientWidth={width}>
+		<Logo {logo} />
+		<ChordPicker
+			bind:selectedChord={chord}
+			bind:selectedFlavour={flavour}
+		/>
+		<Uke
+			width={0.9 * width}
+			height={(1 / 6) * 0.95 * width}
+			radius={0.013 * 0.95 * width}
+			{chords}
+		/>
+		<Footer {name} {website} {github} />
+	</div>
 </main>
 
 <style>
 	main {
 		text-align: center;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
 	}
 </style>

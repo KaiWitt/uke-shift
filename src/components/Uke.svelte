@@ -7,18 +7,18 @@
         createChords,
     } from "../uke";
 
-    export let width = 1500;
-    export let height = 250;
-    export let chords = [];
+    export let width: number = 0;
+    export let height: number = 0;
+    export let chords: number[][] = [];
+    export let radius: number = 0;
 
     const fretCount = 17;
-    const markRadius = 10;
-    const noteRadius = 25;
+    $: markRadius = 0.4 * radius;
     $: strings = createStrings(width, height);
     $: frets = createFrets(strings, fretCount);
     $: nut = createNut(frets);
     $: marks = createMarks(frets, markRadius);
-    $: notes = createChords(strings, frets, chords, noteRadius);
+    $: notes = createChords(strings, frets, chords, radius);
 </script>
 
 <div>

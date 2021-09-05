@@ -1,7 +1,8 @@
 <script lang="ts">
+    export let logo;
 </script>
 
-<h1>UkeShift</h1>
+<h1>{logo}</h1>
 
 <style>
     h1 {

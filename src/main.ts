@@ -6,6 +6,7 @@ const app = new App({
 		name: 'Kai Wolfram',
 		website: 'https://www.kaiwolfram.com/',
 		github: 'https://github.com/KaiWitt/uke-shift',
+		logo: 'UkeShift'
 	}
 });
 

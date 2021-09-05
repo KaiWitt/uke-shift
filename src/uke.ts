@@ -104,11 +104,11 @@ interface Note {
 }
 
 function createChords(ukeStrings: UkeStrings, frets: Frets, chords: number[][], r: number): Note[] {
-    let colors = ["lightgreen", "skyblue", "coral", "gold", "pink"];
+    let colors = ["lightgreen", "skyblue", "coral", "gold", "mediumpurple", "pink"];
     var notes: Note[][] = [];
 
     for (var i = 0; i < chords.length; i++) {
-        notes.push(createChord(ukeStrings, frets, chords[i], 20, colors[i]));
+        notes.push(createChord(ukeStrings, frets, chords[i], r, colors[i]));
     }
 
     return notes.flat()

@@ -1,5 +1,7 @@
 <script lang="ts">
     const chords: string[] = ["A", "B", "C", "D", "E", "F", "G"];
+
+    // All types that the ukebox crate recognizes
     const flavours: string[] = [
         "m",
         "sus2",

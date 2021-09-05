@@ -5,12 +5,10 @@
 </script>
 
 <div>
-    <!-- TODO: icons and GitHub star button -->
     <p>
         Build by <a href={website}>{name}</a>
-    </p>
-    <p>
-        View source code on <a href={github}>GitHub</a>
+        <br />
+        Source code on <a href={github}>GitHub</a>
     </p>
 </div>
 
