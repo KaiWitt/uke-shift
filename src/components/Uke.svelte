@@ -19,8 +19,6 @@
     $: nut = createNut(frets);
     $: marks = createMarks(frets, markRadius);
     $: notes = createChords(strings, frets, chords, noteRadius);
-
-    $: console.log("notes: ", notes);
 </script>
 
 <div>

@@ -20,8 +20,6 @@
 	}
 
 	$: run(chord, flavour);
-	$: console.log("chord: ", chord, flavour);
-	$: console.log("frets", chordPositions);
 </script>
 
 <main>

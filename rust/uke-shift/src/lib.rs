@@ -56,7 +56,6 @@ pub fn chord_positions(chord: &str, flavour: &str) -> Box<[u8]> {
             .filter(|v| v.get_max_fret() - v.get_min_fret() <= MAX_SPAN)
             .map(Fingering::from)
             .for_each(|f| {
-                println!("{:?}", f);
                 if !chords.contains(&f) {
                     chords.push(f)
                 }
