@@ -1,0 +1,21 @@
+[package]
+name = "uke-shift"
+version = "0.1.0"
+edition = "2018"
+authors = ["KaiWitt <kaiwitt@protonmail.com>"]
+description = "Get fret positions for a chord."
+repository = "https://github.com/KaiWitt/uke-shift"
+license = "MIT"
+keywords = ["ukulele", "uke", "music", "wasm"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+lto = true
+
+[dependencies]
+ukebox = "0.8.0"
+wasm-bindgen = "0.2.76"

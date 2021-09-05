@@ -1,30 +1,49 @@
 <script lang="ts">
+	import { arrayToChords } from "./uke";
+	import Uke from "./components/Uke.svelte";
+	import ChordPicker from "./components/ChordPicker.svelte";
+	import Logo from "./components/Logo.svelte";
+	import Footer from "./components/Footer.svelte";
+	import init, { chord_positions } from "../rust/uke-shift/pkg/uke_shift.js";
+
 	export let name: string;
+	export let website: string;
+	export let github: string;
+	export let logo: string;
+
+	let width: number;
+
+	let chord: string = "";
+	let flavour: string = "";
+	let chords: number[][] = [];
+
+	async function run(c: string, f: string) {
+		init();
+		chords = arrayToChords(chord_positions(c, f));
+	}
+
+	$: run(chord, flavour);
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<div bind:clientWidth={width}>
+		<Logo {logo} />
+		<ChordPicker
+			bind:selectedChord={chord}
+			bind:selectedFlavour={flavour}
+		/>
+		<Uke
+			width={0.95 * width}
+			height={(1 / 6) * 0.95 * width}
+			radius={0.013 * 0.95 * width}
+			{chords}
+		/>
+		<Footer {name} {website} {github} />
+	</div>
 </main>
 
 <style>
 	main {
 		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
 	}
 </style>
