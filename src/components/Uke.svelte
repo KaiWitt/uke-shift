@@ -9,21 +9,18 @@
 
     export let width = 1500;
     export let height = 250;
-    export let chords = [
-        [0, 1, 2, 3],
-        [1, 2, 3, 4],
-        [9, 8, 7, 6],
-        [10, 11, 12, 13],
-    ];
+    export let chords = [];
 
-    const fretCount = 16;
+    const fretCount = 17;
     const markRadius = 10;
     const noteRadius = 25;
-    let strings = createStrings(width, height);
-    let frets = createFrets(strings, fretCount);
-    let nut = createNut(frets);
-    let marks = createMarks(frets, markRadius);
-    let notes = createChords(strings, frets, chords, noteRadius);
+    $: strings = createStrings(width, height);
+    $: frets = createFrets(strings, fretCount);
+    $: nut = createNut(frets);
+    $: marks = createMarks(frets, markRadius);
+    $: notes = createChords(strings, frets, chords, noteRadius);
+
+    $: console.log("notes: ", notes);
 </script>
 
 <div>

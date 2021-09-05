@@ -4,6 +4,7 @@ use wasm_bindgen::prelude::*;
 use ukebox::{Chord, Tuning, Voicing, VoicingConfig};
 
 /// Fret position of a chord.
+#[derive(Debug)]
 struct Fingering {
     g: u8,
     c: u8,
@@ -41,19 +42,25 @@ impl Eq for Fingering {}
 /// Every four items are part of a chord.
 #[wasm_bindgen]
 pub fn chord_positions(chord: &str, flavour: &str) -> Box<[u8]> {
+    const MAX_SPAN: u8 = 4;
     if let Ok(chord) = Chord::from_str(&format!("{}{}", chord, flavour)) {
         let config = VoicingConfig {
             tuning: Tuning::C,
             min_fret: 0,
             max_fret: 17,
-            max_span: 4,
+            max_span: MAX_SPAN,
         };
-        let mut chords: Vec<Fingering> = Vec::with_capacity(4);
-        chord.voicings(config).map(Fingering::from).for_each(|f| {
-            if !chords.contains(&f) {
-                chords.push(f)
-            }
-        });
+        let mut chords: Vec<Fingering> = Vec::with_capacity(5);
+        chord
+            .voicings(config)
+            .filter(|v| v.get_max_fret() - v.get_min_fret() <= MAX_SPAN)
+            .map(Fingering::from)
+            .for_each(|f| {
+                println!("{:?}", f);
+                if !chords.contains(&f) {
+                    chords.push(f)
+                }
+            });
 
         return chords
             .into_iter()
@@ -90,5 +97,16 @@ mod tests {
 
         assert_eq!(result[0..4], [0u8, 3, 3, 3]);
         assert_eq!(result.len(), 4 * 4);
+    }
+
+    #[test]
+    fn get_d7_chord() {
+        let chord = "D";
+        let flavour = "7";
+
+        let result = chord_positions(chord, flavour);
+
+        assert_eq!(result[0..4], [2u8, 2, 2, 3]);
+        assert_eq!(result.len(), 5 * 4);
     }
 }

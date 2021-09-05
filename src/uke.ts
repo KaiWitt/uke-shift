@@ -104,7 +104,7 @@ interface Note {
 }
 
 function createChords(ukeStrings: UkeStrings, frets: Frets, chords: number[][], r: number): Note[] {
-    let colors = ["lightgreen", "lightblue", "lightred", "wheat"];
+    let colors = ["lightgreen", "skyblue", "coral", "gold", "pink"];
     var notes: Note[][] = [];
 
     for (var i = 0; i < chords.length; i++) {
@@ -136,13 +136,8 @@ function createChord(ukeStrings: UkeStrings, frets: Frets, chord: number[], r: n
 
 function arrayToChords(array: Uint8Array): number[][] {
     var chords: number[][] = [];
-    var chord: number[] = [];
-    for (var i = 0; i < array.length; i++) {
-        chord.push(array[i]);
-        if (i > 0 && i % 4 === 0) {
-            chords.push(chord);
-            chord = [];
-        }
+    for (var i = 0; i < array.length / 4; i++) {
+        chords.push(Array.from(array.subarray(4 * i, 4 * i + 4)));
     }
 
     return chords;
