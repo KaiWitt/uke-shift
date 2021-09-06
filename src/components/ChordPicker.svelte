@@ -1,17 +1,17 @@
 <script lang="ts">
     const chords: string[] = [
-        "A",
         "Ab",
-        "B",
+        "A",
         "Bb",
+        "B",
         "C",
-        "D",
         "Db",
-        "E",
+        "D",
         "Eb",
+        "E",
         "F",
-        "G",
         "Gb",
+        "G",
     ];
 
     // All types that the ukebox crate recognizes
@@ -29,7 +29,7 @@
         "augMaj7",
         "dim7",
         "m7b5",
-    ].sort();
+    ];
 
     export let selectedChord: string = "";
     export let selectedFlavour: string = "";

@@ -2,7 +2,7 @@
 
 Visualizer for different Ukulele chord positions.
 
-An example project to learn and start using WebAssembly and Svelte.
+Example project to learn and start using WebAssembly and Svelte.
 
 Live demo: https://www.kaiwolfram.com/uke-shift/
 
